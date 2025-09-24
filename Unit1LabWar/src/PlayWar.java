@@ -2,57 +2,81 @@ import java.awt.Point;
 import java.util.Scanner;
 
 public class PlayWar {
+	public static void main(String[] args) {
 
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
+		Scanner sc = new Scanner(System.in); // Scanner for user input
 
-        // Ask for deck size (highest card)
-        System.out.print("Enter the highest card value (2-14): ");
-        int maxCard = sc.nextInt();
+		// Prompt for highest card value (e.g., 14 for Ace)
+		System.out.print("Enter the highest card value (2-14): ");
+		int maxCard = sc.nextInt();
 
-        // Open or closed mode
-        System.out.print("Show cards openly? (true/false): ");
-        boolean isOpen = sc.nextBoolean();
+		// Prompt for whether to show full decks or just top card
+		System.out.print("Show cards openly? (true/false): ");
+		boolean isOpen = sc.nextBoolean();
 
-        // Automatic or manual progression
-        System.out.print("Press Enter to play each battle manually? (true/false): ");
-        boolean manualMode = sc.nextBoolean();
-        sc.nextLine(); // consume leftover newline
+		// Prompt for (press enter to continue each round)
+		System.out.print("Press Enter to play each battle manually? (true/false): ");
+		boolean manualMode = sc.nextBoolean();
+		sc.nextLine(); 
 
-        War war = new War(maxCard, isOpen);
+		// Initialize War game with chosen settings
+		War war = new War(maxCard, isOpen);
 
-        System.out.println("Initial State:");
-        System.out.println(war);
+		// Print initial game state
+		System.out.println("Initial State:");
+		System.out.println(war);
 
-        // Play the game
-        int round = 1;
-        while (true) {
-            System.out.println("\n--- Round " + round + " ---");
+		int round = 1;
+		while (true) { // main game loop
+			if (manualMode) {
+				System.out.print("Press Enter to continue...");
+				sc.nextLine(); // wait for user to press enter
+			}
 
-            if (manualMode) {
-                System.out.print("Press Enter to continue...");
-                sc.nextLine();
-            }
+			System.out.println("\n--- Round " + round + " ---");
 
-            boolean ongoing = war.war();
-            System.out.println(war);
-            Point scores = war.score();
-            System.out.println("Scores: Player1 = " + scores.x + ", Player2 = " + scores.y);
+			// Play a round and track result
+			String result = war.playRound();
 
-            if (!ongoing) {
-                System.out.println("\nGame Over!");
-                if (scores.x > scores.y) {
-                    System.out.println("Player1 Wins!");
-                } else if (scores.y > scores.x) {
-                    System.out.println("Player2 Wins!");
-                } else {
-                    System.out.println("It's a tie!");
-                }
-                break;
-            }
-            round++;
-        }
+			// Print the current state of decks/reserves
+			System.out.println(war);
 
-        sc.close();
-    }
+			// Game over conditions
+			if (result.equals("GameOver") || round > 10000) { // also stop after 10,000 rounds to prevent infinite loops
+				Point scores = war.score();
+
+				//flag for whether a war was ongoing when game ended
+				if (war.war == true) { 
+					System.out.println("Game Ended During War.");
+				}
+
+				if (round > 10000) {
+					System.out.println("Maximum Rounds Exceeded");
+				}
+
+				System.out.println("\nGame Over!");
+				System.out.println("Final Scores: Player1 = " + scores.x + ", Player2 = " + scores.y);
+
+				// Determine winner
+				if (scores.x > scores.y)
+					System.out.println("Player1 Wins!");
+				else if (scores.y > scores.x)
+					System.out.println("Player2 Wins!");
+				else
+					System.out.println("It's a tie!");
+
+				break; // exit loop/game
+			}
+
+			else {
+				// Round completed normally; show result and updated scores
+				System.out.println(result);
+				Point scores = war.score();
+				System.out.println("Scores: Player1 = " + scores.x + ", Player2 = " + scores.y);
+			}
+			round++;
+		}
+
+		sc.close(); // close Scanner
+	}
 }

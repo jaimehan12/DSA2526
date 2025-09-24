@@ -13,7 +13,12 @@ public class Link {
 		System.out.println(spies.remove());
 		System.out.println(spies.peek()); //head of the list
 		//there is also peekLast()
-		
+		Playlist pop = new Playlist(new Track("Manchild", 130));
+		System.out.println(pop);
+		pop.addEnd(new Track("Love Story", 250));
+		System.out.println(pop);
+		pop.addFirst(new Track("Dancing Queen", 200));
+		System.out.println(pop);
 	}
 
 }
