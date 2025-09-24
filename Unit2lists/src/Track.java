@@ -15,9 +15,17 @@ public class Track {
 		this(title, "Artist", duration, null);
 	}
 	
+	
 	@Override
 	public String toString() {
 		return "Track [title=" + title + ", artist=" + artist + ", duration=" + duration + "]";
+	}
+
+	public boolean equals(Track other) {
+		if (other == null) {
+			return false;
+		}
+		return this.title.equals(other.title);
 	}
 
 }

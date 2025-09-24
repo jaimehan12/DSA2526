@@ -19,6 +19,12 @@ public class Link {
 		System.out.println(pop);
 		pop.addFirst(new Track("Dancing Queen", 200));
 		System.out.println(pop);
+		pop.add(new Track("Sorry", 180), "Manchild");
+		System.out.println(pop);
+		pop.add(new Track("I am the Walrus", 180), "Love Story");
+		System.out.println(pop);
+		pop.add(new Track("Good News", 190), 6);
+		System.out.println(pop);
 	}
 
 }
