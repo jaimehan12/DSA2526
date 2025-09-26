@@ -35,6 +35,8 @@ public class Playlist {
 	}
 
 	public boolean add(Track newTrack, String prec) {
+		
+		//Remove, get (2 different methods), size and is empty
 		if (newTrack == null) //null is super important
 			return false;
 		Track runner = first;
@@ -65,6 +67,69 @@ public class Playlist {
 		newTrack.next = runner.next;
 		runner.next = newTrack;
 		return true;
+	}
+	
+	//public Track moveTrack(Track track) {
+	//	
+	//}
+	public boolean isEmpty() {
+		return first == null; 
+	}
+	
+	public Track getFront() {
+		return first;
+	}
+	
+	public Track getBack() {
+		Track runner = first;
+		while (runner.next!=null) 
+			runner = runner.next;
+		
+		return runner;
+		
+		
+	}
+	
+	public Track remove() {
+		if (first == null)
+			return null;
+		Track temp = first;
+		first = first.next;
+		return temp;
+	}
+	
+	public int size() {
+		int size = 0;
+		Track runner = first;
+		while (runner!=null) {
+			runner = runner.next;
+			size++;
+		}
+		return size;
+	}
+	
+	public void shuffle() {
+		if (size() > 0) {
+			return;
+		}
+		Track temp;
+		Track runner = first;
+		int random = (int) (Math.random() * size());
+		for (int i = 0; i< random; i++) {
+			runner= runner.next;
+		}
+		runner.next = runner.next.next; //drops linked list by one
+		temp = runner;
+		while (size() > 1) {
+			random = (int) (Math.random() * size());
+			for (int i = 0; i< random; i++) {
+				runner= runner.next;
+			}
+			
+			runner.next = runner.next.next;
+			
+			
+		}
 	}
 	
 

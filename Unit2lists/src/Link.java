@@ -25,6 +25,13 @@ public class Link {
 		System.out.println(pop);
 		pop.add(new Track("Good News", 190), 6);
 		System.out.println(pop);
+		System.out.println(pop.size());
+		System.out.println(pop.getFront());
+		System.out.println(pop.getBack());
+		pop.remove();
+		System.out.println(pop);
+		pop.shuffle();
+		System.out.println(pop);
 	}
 
 }
